@@ -1,0 +1,17 @@
+{
+  "date": "15/07/2026",
+  "brent": "84.30 $",
+  "wti": "81.10 $",
+  "usa": [
+    {
+      "title": "US inflation remains under scrutiny",
+      "url": "https://www.reuters.com"
+    }
+  ],
+  "china": [
+    {
+      "title": "China announces economic support measures",
+      "url": "https://www.reuters.com"
+    }
+  ]
+}
