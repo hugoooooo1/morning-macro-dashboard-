@@ -1,79 +1,104 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Morning Macro Dashboard</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morning Macro Dashboard</title>
 
-<style>
-body{
-    font-family: Arial, sans-serif;
-    background:#111827;
-    color:white;
-    margin:0;
-    padding:40px;
-}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111827;
+            color: white;
+            margin: 0;
+            padding: 30px;
+        }
 
-.container{
-    max-width:1000px;
-    margin:auto;
-}
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
 
-.card{
-    background:#1f2937;
-    padding:20px;
-    margin-bottom:20px;
-    border-radius:10px;
-}
+        .card {
+            background: #1f2937;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
 
-h1{
-    color:#60a5fa;
-}
+        h1 {
+            color: #60a5fa;
+        }
 
-h2{
-    color:#fbbf24;
-}
+        h2 {
+            color: #fbbf24;
+        }
 
-a{
-    color:#93c5fd;
-    text-decoration:none;
-}
-
-a:hover{
-    text-decoration:underline;
-}
-</style>
+        a {
+            color: #93c5fd;
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
 
-<h1>📈 Morning Macro Dashboard</h1>
+    <h1>📈 Morning Macro Dashboard</h1>
 
-<div class="card">
-<h2>🛢️ Pétrole</h2>
-<p class="oil-brent">Brent : Chargement...</p>
-<p class="oil-wti">WTI : Chargement...</p>
+    <div class="card">
+        <h2>🛢️ Pétrole</h2>
+        <p id="brent">Chargement...</p>
+        <p id="wti">Chargement...</p>
+    </div>
+
+    <div class="card">
+        <h2>🇺🇸 États-Unis</h2>
+        <div id="usa">Chargement...</div>
+    </div>
+
+    <div class="card">
+        <h2>🇨🇳 Chine</h2>
+        <div id="china">Chargement...</div>
+    </div>
+
 </div>
 
-<div class="card">
-<h2>🇺🇸 États-Unis</h2>
-<div class="usa-news">Actualités à venir...</div>
-</div>
+<script>
+async function loadData() {
+    try {
+        const response = await fetch('./data.json');
+        const data = await response.json();
 
-<div class="card">
-<h2>🇨🇳 Chine</h2>
-<div class="china-news">Actualités à venir...</div>
-</div>
+        document.getElementById('brent').textContent =
+            'Brent : ' + data.brent;
 
-<div class="card">
-<h2>🌍 Géopolitique</h2>
-<p>Section en cours de développement...</p>
-</div>
+        document.getElementById('wti').textContent =
+            'WTI : ' + data.wti;
 
-<div class="card">
-<h2>📚 Sources</h2>
-<ul>
-<li>https://www.reuters.com</li>
-<li>https://finance.yahoo.comYahoo Finance</a><
+        document.getElementById('usa').innerHTML =
+            data.usa.map(article =>
+                `<p>${article.url}${article.title}</a></p>`
+            ).join('');
+
+        document.getElementById('china').innerHTML =
+            data.china.map(article =>
+                `<p>${article.url}${article.title}</a></p>`
+            ).join('');
+
+    } catch (error) {
+
+        document.getElementById('brent').textContent =
+            'Erreur chargement données';
+
+        document.getElementById('wti').textContent =
+            'Erreur chargement données';
+
+        console.error(error);
+    }
+}
+
+loadData();
+</script>
+
+</body>
+</html>
