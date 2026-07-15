@@ -1,103 +1,183 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Morning Macro Dashboard</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #111827;
-            color: white;
-            margin: 0;
-            padding: 30px;
-        }
+<title>Morning Macro Dashboard</title>
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-        }
+<style>
 
-        .card {
-            background: #1f2937;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
+body{
+    margin:0;
+    padding:30px;
+    font-family:Arial,sans-serif;
+    background:#0f172a;
+    color:white;
+}
 
-        h1 {
-            color: #60a5fa;
-        }
+.container{
+    max-width:1200px;
+    margin:auto;
+}
 
-        h2 {
-            color: #fbbf24;
-        }
+.header{
+    margin-bottom:30px;
+}
 
-        a {
-            color: #93c5fd;
-        }
-    </style>
+.header h1{
+    color:#60a5fa;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:12px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+.card h2{
+    color:#fbbf24;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:20px;
+}
+
+.price{
+    font-size:24px;
+    font-weight:bold;
+}
+
+.positive{
+    color:#22c55e;
+}
+
+.negative{
+    color:#ef4444;
+}
+
+.news-item{
+    margin-bottom:20px;
+    padding-bottom:15px;
+    border-bottom:1px solid #334155;
+}
+
+.news-item a{
+    color:#60a5fa;
+    text-decoration:none;
+}
+
+.news-item a:hover{
+    text-decoration:underline;
+}
+
+.update{
+    color:#94a3b8;
+}
+
+</style>
+
 </head>
+
 <body>
 
 <div class="container">
 
-    <h1>📈 Morning Macro Dashboard</h1>
+<div class="header">
+<h1>📈 Morning Macro Dashboard</h1>
+<p class="update" id="updateTime">Chargement...</p>
+</div>
 
-    <div class="card">
-        <h2>🛢️ Pétrole</h2>
-        <p id="brent">Chargement...</p>
-        <p id="wti">Chargement...</p>
-    </div>
+<div class="grid">
 
-    <div class="card">
-        <h2>🇺🇸 États-Unis</h2>
-        <div id="usa">Chargement...</div>
-    </div>
+<div class="card">
+<h2>🛢️ Brent</h2>
+<div id="brentPrice" class="price">...</div>
+<div id="brentChange"></div>
+</div>
 
-    <div class="card">
-        <h2>🇨🇳 Chine</h2>
-        <div id="china">Chargement...</div>
-    </div>
+<div class="card">
+<h2>🛢️ WTI</h2>
+<div id="wtiPrice" class="price">...</div>
+<div id="wtiChange"></div>
+</div>
+
+</div>
+
+<div class="card">
+<h2>🇺🇸 États-Unis</h2>
+<div id="usaNews"></div>
+</div>
+
+<div class="card">
+<h2>🇨🇳 Chine</h2>
+<div id="chinaNews"></div>
+</div>
 
 </div>
 
 <script>
-async function loadData() {
-    try {
-        const response = await fetch('./data.json');
-        const data = await response.json();
 
-        document.getElementById('brent').textContent =
-            'Brent : ' + data.brent;
+fetch('/data.json')
+.then(response => response.json())
+.then(data => {
 
-        document.getElementById('wti').textContent =
-            'WTI : ' + data.wti;
+document.getElementById('updateTime').innerText =
+'Dernière mise à jour : ' + data.updateTime;
 
-        document.getElementById('usa').innerHTML =
-            data.usa.map(article =>
-                `<p>${article.url}${article.title}</a></p>`
-            ).join('');
+document.getElementById('brentPrice').innerText =
+'$' + data.oil.brent.price;
 
-        document.getElementById('china').innerHTML =
-            data.china.map(article =>
-                `<p>${article.url}${article.title}</a></p>`
-            ).join('');
+document.getElementById('brentChange').innerHTML =
+'<span class="positive">+' +
+data.oil.brent.change +
+'%</span>';
 
-    } catch (error) {
+document.getElementById('wtiPrice').innerText =
+'$' + data.oil.wti.price;
 
-        document.getElementById('brent').textContent =
-            'Erreur chargement données';
+document.getElementById('wtiChange').innerHTML =
+'<span class="positive">+' +
+data.oil.wti.change +
+'%</span>';
 
-        document.getElementById('wti').textContent =
-            'Erreur chargement données';
+document.getElementById('usaNews').innerHTML =
+data.usa.map(article => `
+<div class="news-item">
+<h3>${article.title}</h3>
+<p>${article.summary}</p>
+${article.url}
+Lire l'article →
+</a>
+</div>
+`).join('');
 
-        console.error(error);
-    }
-}
+document.getElementById('chinaNews').innerHTML =
+data.china.map(article => `
+<div class="news-item">
+<h3>${article.title}</h3>
+<p>${article.summary}</p>
+<a hrefle.url}
+Lire l'article →
+</a>
+</div>
+`).join('');
 
-loadData();
+})
+
+.catch(error => {
+
+document.body.innerHTML +=
+'<h2 style="color:red">Erreur de chargement des données</h2>';
+
+console.error(error);
+
+});
+
 </script>
 
 </body>
