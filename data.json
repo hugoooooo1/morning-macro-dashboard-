@@ -3,11 +3,11 @@
 
   "oil": {
     "brent": {
-      "price": 84.30,
+      "price": 84.3,
       "change": 1.4
     },
     "wti": {
-      "price": 81.10,
+      "price": 81.1,
       "change": 1.1
     }
   },
@@ -17,11 +17,6 @@
       "title": "US inflation remains under scrutiny",
       "summary": "Markets are awaiting new inflation data.",
       "url": "https://www.reuters.com"
-    },
-    {
-      "title": "Fed officials maintain cautious stance",
-      "summary": "Interest rates remain a key focus.",
-      "url": "https://www.cnbc.com"
     }
   ],
 
@@ -30,11 +25,6 @@
       "title": "China announces economic stimulus",
       "summary": "Support measures target industrial growth.",
       "url": "https://www.reuters.com"
-    },
-    {
-      "title": "Manufacturing activity recovers",
-      "summary": "Latest indicators show improvement.",
-      "url": "https://www.cnbc.com"
     }
   ]
 }
