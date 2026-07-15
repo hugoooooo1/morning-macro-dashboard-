@@ -1,17 +1,40 @@
 {
-  "date": "15/07/2026",
-  "brent": "84.30 $",
-  "wti": "81.10 $",
+  "updateTime": "15/07/2026 06:00",
+
+  "oil": {
+    "brent": {
+      "price": 84.30,
+      "change": 1.4
+    },
+    "wti": {
+      "price": 81.10,
+      "change": 1.1
+    }
+  },
+
   "usa": [
     {
       "title": "US inflation remains under scrutiny",
+      "summary": "Markets are awaiting new inflation data.",
       "url": "https://www.reuters.com"
+    },
+    {
+      "title": "Fed officials maintain cautious stance",
+      "summary": "Interest rates remain a key focus.",
+      "url": "https://www.cnbc.com"
     }
   ],
+
   "china": [
     {
-      "title": "China announces economic support measures",
+      "title": "China announces economic stimulus",
+      "summary": "Support measures target industrial growth.",
       "url": "https://www.reuters.com"
+    },
+    {
+      "title": "Manufacturing activity recovers",
+      "summary": "Latest indicators show improvement.",
+      "url": "https://www.cnbc.com"
     }
   ]
 }
